@@ -5,9 +5,9 @@ import express from "express";
 const adminRoutes = express.Router();
 
 // ===== Define User Routes =====
-adminRoutes.delete("/removeUser");
-adminRoutes.get("/readUser");
 adminRoutes.get("/readUsers");
+adminRoutes.get("/readUser");
+adminRoutes.delete("/removeUser");
 
 // ===== Define Admin Routes =====
 adminRoutes.post("/createAdmin");

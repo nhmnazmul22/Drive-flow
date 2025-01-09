@@ -26,18 +26,23 @@ const reviewsSchema = new mongoose.Schema({
 // ===== Define Data Schema =====
 const DataSchema = new mongoose.Schema(
   {
+    firstName: { type: String, required: true },
+    lastName: { type: String },
     fullName: { type: String, required: true },
-    img: { type: String, required: true },
+    img: { type: String },
     about: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String, required: true },
+    isEmailVerified: { type: Boolean, default: false, required: true },
+    isPhoneVerified: { type: Boolean, default: false, required: true },
     password: { type: String, required: true },
-    professions: { type: [String], required: true },
-    language: { type: [String], required: true },
-    rating: { type: Number, required: true },
-    education: { type: educationSchema, required: true },
-    address: { type: addressSchema, required: true },
-    reviewsByHosts: { type: [reviewsSchema], required: true },
+    otp: { type: String, default: "000000", required: true },
+    professions: { type: [String] },
+    language: { type: [String] },
+    rating: { type: Number },
+    education: { type: educationSchema },
+    address: { type: addressSchema },
+    reviewsByHosts: { type: [reviewsSchema] },
   },
   { timestamps: true, versionKey: false }
 );

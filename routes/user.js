@@ -1,13 +1,18 @@
 // ===== External Imports =====
 import express from "express";
 
+// ===== Internal Imports =====
+import * as UserController from "../src/controller/UserController.js";
+
 // ===== Define App Router =====
 const userRoutes = express.Router();
 
 // ===== Define User Routes =====
-userRoutes.post("/createUser");
-userRoutes.post("/updateUser");
+userRoutes.post("/signupUser", UserController.signupUser);
+userRoutes.post("/verifyUser/:email", UserController.verifyUser);
+userRoutes.post("/loginUser", UserController.loginUser);
 userRoutes.post("/logoutUser");
+userRoutes.post("/updateUser");
 userRoutes.delete("/removeUser");
 userRoutes.get("/readUser");
 
