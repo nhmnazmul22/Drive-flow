@@ -6,7 +6,7 @@ const DataSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     shortDes: { type: String, required: true },
-    description: { type: Number, required: true },
+    description: { type: String, required: true },
     blogImg: { type: String, required: true },
     tags: { type: [String], required: true },
     category: { type: String, required: true },

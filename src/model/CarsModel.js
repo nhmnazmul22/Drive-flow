@@ -26,32 +26,6 @@ const ratingProgressSchema = new mongoose.Schema({
   accuracy: { type: Number, required: true },
 });
 
-// ===== Define reviews Schema =====
-const reviewsSchema = new mongoose.Schema({
-  rating: { type: Number, required: true },
-  feedback: { type: String, required: true },
-  userID: { type: mongoose.Types.ObjectId, required: true },
-});
-
-// ===== Define Status Info Schema =====
-const statusInfoSchema = new mongoose.Schema({
-  pickupLocation: { type: String, required: true },
-  dropoffLocation: { type: String, required: true },
-  pickupDateTime: { type: String, required: true },
-  dropoffDateTime: { type: String, required: true },
-  numberOfPassenger: { type: String, required: true },
-  contactInfo: {
-    type: {
-      fullName: { type: string, required: true },
-      email: { type: string, required: true },
-      phone: { type: string, required: true },
-      alternativePhone: { type: string },
-    },
-    required: true,
-  },
-  additionalNotes: { type: String },
-  userID: { type: mongoose.Types.ObjectId, required: true },
-});
 
 // ===== Define Data Schema =====
 const DataSchema = new mongoose.Schema(
@@ -71,10 +45,7 @@ const DataSchema = new mongoose.Schema(
     description: { type: String, required: true },
     rating: { type: String, required: true },
     ratingProgress: { type: ratingProgressSchema, required: true },
-    reviews: { type: [reviewsSchema], required: true },
     hosterID: { type: mongoose.Types.ObjectId, required: true },
-    bookedInfo: { type: statusInfoSchema, default: {}, require: true },
-    requestInfo: { type: [statusInfoSchema], default: [], require: true },
   },
   { timestamps: true, versionKey: false }
 );

@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 // ===== Internal Imports =====
 import UsersModel from "../model/UsersModel.js";
@@ -9,6 +10,7 @@ import {
   validatePhoneNumber,
 } from "../utility/Validation.js";
 import { sendVerificationEmail } from "../utility/VerifyEmail.js";
+
 // ===== User Signup Service =====
 export const signupUserService = async (req) => {
   try {
@@ -148,8 +150,8 @@ export const loginUserService = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = TokenEncoded(user._id, user.email, user.isEmailVerified);
-  
+    const token = TokenEncoded(user._id, user.email);
+
     // Set token in a secure HTTP-only cookie
     res.cookie("token", token, {
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
@@ -168,3 +170,130 @@ export const loginUserService = async (req, res) => {
     return { status: "Failed", data: err.toString() };
   }
 };
+
+// ===== User Read Service =====
+export const readUserService = async (req) => {
+  try {
+    const userID = new mongoose.Types.ObjectId(req.headers.userID);
+    const email = req.headers.email;
+
+    // Validation of request header items
+    if (!userID && !email) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Find the user @TODO- Aggregation need
+    const user = await UsersModel.findOne(
+      { _id: userID, email: email },
+      { password: 0, otp: 0 }
+    );
+
+    // Checking user is here in server or not
+    if (!user) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    if (!user.isEmailVerified) {
+      return { status: "Failed", data: "User email not verified" };
+    }
+
+    return { status: "Successful", data: user };
+  } catch (err) {
+    return { status: "Failed", data: err.toString() };
+  }
+};
+
+// ===== User Update Service =====
+export const updateUserService = async (req) => {
+  try {
+    const reqBody = req.body;
+    const userID = new mongoose.Types.ObjectId(req.headers.userID);
+    const email = req.headers.email;
+
+    // Validation of request header items
+    if (!userID && !email) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Find the user
+    const user = await UsersModel.findOne({ _id: userID, email: email });
+
+    // Checking user is here in server or not
+    if (!user) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Update the user
+    const updateInfo = await UsersModel.updateOne(
+      { _id: userID, email: email },
+      { $set: reqBody }
+    );
+
+    return { status: "Successful", data: updateInfo };
+  } catch (err) {
+    return { status: "Failed", data: err.toString() };
+  }
+};
+
+// ===== User Logout Service =====
+export const logoutUserService = async (req, res) => {
+  try {
+    const userID = new mongoose.Types.ObjectId(req.headers.userID);
+    const email = req.headers.email;
+
+    // Validation of request header items
+    if (!userID && !email) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Find the user
+    const user = await UsersModel.findOne({ _id: userID, email: email });
+
+    // Checking user is here in server or not
+    if (!user) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Logout the user
+    res.clearCookie("token");
+
+    return { status: "Successful", data: "User Logout Successful" };
+  } catch (err) {
+    return { status: "Failed", data: err.toString() };
+  }
+};
+
+// ===== User Remove Service =====
+export const removeUserService = async (req, res) => {
+  try {
+    const userID = new mongoose.Types.ObjectId(req.headers.userID);
+    const email = req.headers.email;
+
+    // Validation of request header items
+    if (!userID && !email) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Find the user
+    const user = await UsersModel.findOne({ _id: userID, email: email });
+
+    // Checking user is here in server or not
+    if (!user) {
+      return { status: "Failed", data: "Something went wrong." };
+    }
+
+    // Delete the user
+    const deleteInfo = await UsersModel.deleteOne({
+      _id: userID,
+      email: email,
+    });
+
+    // Logout the user
+    res.clearCookie("token");
+
+    return { status: "Successful", data: deleteInfo };
+  } catch (err) {
+    return { status: "Failed", data: err.toString() };
+  }
+};
+

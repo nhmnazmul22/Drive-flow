@@ -1,16 +1,15 @@
 import jwt from "jsonwebtoken";
 
 // ==== Token Encoded Functionality =====
-export const TokenEncoded = (userID, email, isEmailVerified) => {
+export const TokenEncoded = (id, email) => {
   const KEY = process.env.JWT_KEY;
   const JwtOptions = {
     expiresIn: process.env.JWT_EXPIRED_TIME,
   };
 
   const Payload = {
-    userID: userID,
+    id: id,
     email: email,
-    isEmailVerified: isEmailVerified,
   };
 
   const token = jwt.sign(Payload, KEY, JwtOptions);
