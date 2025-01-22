@@ -3,6 +3,7 @@ import express from "express";
 
 // ===== Internal Imports =====
 import * as AdminController from "../src/controller/adminController/AdminController.js";
+import * as BrandController from "../src/controller/adminController/BrandController.js";
 import * as HostController from "../src/controller/adminController/HostController.js";
 import * as ServiceController from "../src/controller/adminController/ServiceController.js";
 import * as UserController from "../src/controller/adminController/UserController.js";
@@ -44,11 +45,11 @@ adminRoutes.delete(
 );
 
 // ===== Define Brands Routes =====
-adminRoutes.post("/createBrand");
-adminRoutes.post("/updateBrand ");
-adminRoutes.get("/readBrands ");
-adminRoutes.get("/readBrand ");
-adminRoutes.delete("/removeBrand ");
+adminRoutes.post("/createBrand", BrandController.createBrand);
+adminRoutes.post("/updateBrand/:brandID ", BrandController.updateBrand);
+adminRoutes.get("/readBrands", BrandController.readBrands);
+adminRoutes.get("/readBrand/:brandID", BrandController.readBrand);
+adminRoutes.delete("/removeBrand/:brandID", BrandController.removeBrand);
 
 // ===== Define Types Routes =====
 adminRoutes.post("/createType");
