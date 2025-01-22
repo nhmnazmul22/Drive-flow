@@ -190,7 +190,7 @@ export const readUserService = async (req) => {
 
     // Checking user is here in server or not
     if (!user) {
-      return { status: "Failed", data: "Something went wrong." };
+      return { status: "Failed", data: "User not found" };
     }
 
     if (!user.isEmailVerified) {
@@ -296,4 +296,3 @@ export const removeUserService = async (req, res) => {
     return { status: "Failed", data: err.toString() };
   }
 };
-

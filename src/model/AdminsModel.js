@@ -9,6 +9,8 @@ const DataSchema = new mongoose.Schema(
     about: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String, required: true },
+    isEmailVerified: { type: Boolean, default: false, required: true },
+    otp: { type: String, default: ".", required: true },
     password: { type: String, required: true },
   },
   { timestamps: true, versionKey: false }

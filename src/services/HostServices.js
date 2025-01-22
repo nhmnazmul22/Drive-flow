@@ -205,7 +205,7 @@ export const readHostService = async (req) => {
   }
 };
 
-// ===== Host Read Service =====
+// ===== Hosts Read Service =====
 export const readHostsService = async (req) => {
   try {
     // Find the Hosts

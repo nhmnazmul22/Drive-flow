@@ -33,3 +33,19 @@ export const HostAuthVerify = (req, res, next) => {
   req.headers.email = email;
   next();
 };
+
+// ==== Verify Admin Auth Token ====
+export const AdminAuthVerify = (req, res, next) => {
+  const token = req.cookies["adminToken"];
+  const decodedToken = TokenDecoded(token);
+
+  if (!decodedToken) {
+    return res.status(401).json({ status: "Failed", message: "Unauthorize" });
+  }
+
+  const { id, email } = decodedToken;
+
+  req.headers.adminID = id;
+  req.headers.email = email;
+  next();
+};

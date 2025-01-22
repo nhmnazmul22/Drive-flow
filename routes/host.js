@@ -3,6 +3,7 @@ import express from "express";
 
 // ==== Internal Imports =====
 import * as BlogController from "../src/controller/BlogController.js";
+import * as CarController from "../src/controller/CarController.js";
 import * as HostController from "../src/controller/HostController.js";
 import { HostAuthVerify } from "../src/middleware/AuthMiddleware.js";
 // ===== Define App Router =====
@@ -19,22 +20,39 @@ hostRoutes.delete("/removeHost", HostAuthVerify, HostController.removeHost);
 
 // ===== Define Blogs Routes =====
 hostRoutes.post("/createBlog", HostAuthVerify, BlogController.createBlog);
-hostRoutes.post("/updateBlog");
-hostRoutes.post("/readBlogs");
-hostRoutes.post("/readBlog");
-hostRoutes.post("/removeBlog");
+hostRoutes.post(
+  "/updateBlog/:blogID",
+  HostAuthVerify,
+  BlogController.updateBlog
+);
+hostRoutes.get("/readBlogs", HostAuthVerify, BlogController.readHosterBlogs);
+hostRoutes.get(
+  "/readBlog/:blogID",
+  HostAuthVerify,
+  BlogController.readHosterBlog
+);
+hostRoutes.delete(
+  "/removeBlog/:blogID",
+  HostAuthVerify,
+  BlogController.removeBlog
+);
 
 // ===== Define Cars Routes =====
-hostRoutes.post("/createCar");
-hostRoutes.post("/updateCar");
-hostRoutes.get("/readCars");
-hostRoutes.get("/readCar");
-hostRoutes.delete("/deleteCar ");
-hostRoutes.post("/acceptRequest");
-hostRoutes.post("/rejectRequest");
-
-// ===== Define Reviews Routes =====
-hostRoutes.post("/reviewUser");
+hostRoutes.post("/createCar", HostAuthVerify, CarController.createCar);
+hostRoutes.post("/updateCar/:carID", HostAuthVerify, CarController.updateCar);
+hostRoutes.get("/readHosterCars", HostAuthVerify, CarController.readHosterCars);
+hostRoutes.get(
+  "/readHosterCar/:carID",
+  HostAuthVerify,
+  CarController.readHosterCar
+);
+hostRoutes.delete(
+  "/deleteCar/:carID",
+  HostAuthVerify,
+  CarController.deleteHosterCar
+);
+hostRoutes.post("/acceptRequest/:carRequestID", CarController.acceptRequest);
+hostRoutes.post("/rejectRequest/:carRequestID", CarController.rejectRequest);
 
 // ==== Export Host Routes =====
 export default hostRoutes;

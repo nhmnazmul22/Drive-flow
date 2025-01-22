@@ -19,6 +19,8 @@ const DataSchema = new mongoose.Schema(
       required: true,
     },
     additionalNotes: { type: String },
+    status: { type: String, default: "Pending", require: true },
+    hosterID: { type: mongoose.Types.ObjectId, required: true },
     carID: { type: mongoose.Types.ObjectId, required: true },
     userID: { type: mongoose.Types.ObjectId, required: true },
   },

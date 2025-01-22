@@ -1,25 +1,36 @@
 // ===== External Imports =====
 import express from "express";
 
+// ===== Internal Imports =====
+import * as AdminController from "../src/controller/adminController/AdminController.js";
+import * as HostController from "../src/controller/adminController/HostController.js";
+import * as UserController from "../src/controller/adminController/UserController.js";
+import { AdminAuthVerify } from "../src/middleware/AuthMiddleware.js";
+
 // ===== Define App Router =====
 const adminRoutes = express.Router();
 
-// ===== Define User Routes =====
-adminRoutes.get("/readUsers");
-adminRoutes.get("/readUser");
-adminRoutes.delete("/removeUser");
-
 // ===== Define Admin Routes =====
-adminRoutes.post("/createAdmin");
-adminRoutes.post("/updateAdmin");
-adminRoutes.post("/logoutAdmin");
-adminRoutes.delete("/removeAdmin ");
-adminRoutes.get("/readAdmin");
+adminRoutes.post("/signupAdmin", AdminController.signupAdmin);
+adminRoutes.post("/verifyAdmin/:email", AdminController.verifyAdmin);
+adminRoutes.post("/loginAdmin", AdminController.loginAdmin);
+adminRoutes.get("/readAdmin", AdminAuthVerify, AdminController.readAdmin);
+adminRoutes.post("/updateAdmin", AdminAuthVerify, AdminController.updateAdmin);
+adminRoutes.post("/logoutAdmin", AdminAuthVerify, AdminController.logoutAdmin);
+
+// ===== Define User Routes =====
+adminRoutes.get("/readUsers", AdminAuthVerify, UserController.readUsers);
+adminRoutes.get("/readUser/:userID", AdminAuthVerify, UserController.readUser);
+adminRoutes.delete(
+  "/removeUser/:userID",
+  AdminAuthVerify,
+  UserController.removeUser
+);
 
 // ===== Define Host Routes =====
-adminRoutes.get("/readHosts");
-adminRoutes.get("/readHost");
-adminRoutes.delete("/removeHost");
+adminRoutes.get("/readHosts", HostController.readHosts);
+adminRoutes.get("/readHost/:hostID", HostController.readHost);
+adminRoutes.delete("/removeHost/:hostID", HostController.removeHost);
 
 // ===== Define Services Routes =====
 adminRoutes.post("/createServices");

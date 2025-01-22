@@ -17,16 +17,6 @@ const insuranceSchema = new mongoose.Schema({
   deductible: { type: String, required: true },
 });
 
-// ===== Define ratingProgress Schema =====
-const ratingProgressSchema = new mongoose.Schema({
-  cleanliness: { type: Number, required: true },
-  maintenance: { type: Number, required: true },
-  communication: { type: Number, required: true },
-  convenience: { type: Number, required: true },
-  accuracy: { type: Number, required: true },
-});
-
-
 // ===== Define Data Schema =====
 const DataSchema = new mongoose.Schema(
   {
@@ -36,15 +26,15 @@ const DataSchema = new mongoose.Schema(
     carImg03: { type: String, required: true },
     title: { type: String, required: true },
     tripsCompleted: { type: Number, default: 0, required: true },
-    status: { type: String, required: true },
+    status: { type: String, default:"Available", required: true },
     perDayPrice: { type: String, required: true },
     specification: { type: specificationSchema, required: true },
     presentLocation: { type: String, required: true },
     insurance: { type: insuranceSchema, required: true },
     features: { type: [String], required: true },
     description: { type: String, required: true },
-    rating: { type: String, required: true },
-    ratingProgress: { type: ratingProgressSchema, required: true },
+    rating: { type: Number, default: 0, required: true },
+
     hosterID: { type: mongoose.Types.ObjectId, required: true },
   },
   { timestamps: true, versionKey: false }
