@@ -10,7 +10,7 @@ import * as ServiceController from "../src/controller/ServiceController.js";
 import * as TestimonialController from "../src/controller/TestimonialController.js";
 import * as TypeController from "../src/controller/TypeController.js";
 import * as UserController from "../src/controller/UserController.js";
-import { AuthVerify } from "../src/middleware/Authmiddleware.js";
+import { AuthVerify } from "../src/middleware/AuthMiddleware.js";
 
 // ===== Define App Router =====
 const userRoutes = express.Router();

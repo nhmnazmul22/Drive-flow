@@ -5,6 +5,7 @@ import express from "express";
 import * as AdminController from "../src/controller/adminController/AdminController.js";
 import * as HostController from "../src/controller/adminController/HostController.js";
 import * as UserController from "../src/controller/adminController/UserController.js";
+import * as ServiceController from "../src/controller/adminController/ServiceController.js";
 import { AdminAuthVerify } from "../src/middleware/AuthMiddleware.js";
 
 // ===== Define App Router =====
@@ -33,11 +34,11 @@ adminRoutes.get("/readHost/:hostID", HostController.readHost);
 adminRoutes.delete("/removeHost/:hostID", HostController.removeHost);
 
 // ===== Define Services Routes =====
-adminRoutes.post("/createServices");
-adminRoutes.post("/updateServices");
-adminRoutes.get("/readServices");
-adminRoutes.get("/readService");
-adminRoutes.delete("/removeServices");
+adminRoutes.post("/createServices", ServiceController.createService);
+adminRoutes.post("/updateServices", ServiceController.updateService);
+adminRoutes.get("/readServices", ServiceController.readServices);
+adminRoutes.get("/readService", ServiceController.readServices);
+adminRoutes.delete("/removeServices", ServiceController.removeService);
 
 // ===== Define Brands Routes =====
 adminRoutes.post("/createBrand");
