@@ -48,13 +48,9 @@ userRoutes.get("/readCars", CarController.readCars);
 userRoutes.get("/readCar/:carID", CarController.readCar);
 userRoutes.post("/bookCar/:carID", AuthVerify, CarController.bookCar);
 userRoutes.post("/requestCar/:carID", AuthVerify, CarController.requestCar);
+userRoutes.get("/getBookedCars", AuthVerify, CarController.getUserBookedCars);
 userRoutes.get(
-  "/getUserBookedCars",
-  AuthVerify,
-  CarController.getUserBookedCars
-);
-userRoutes.get(
-  "/getUserRequestedCars",
+  "/getRequestedCars",
   AuthVerify,
   CarController.getUserRequestedCars
 );

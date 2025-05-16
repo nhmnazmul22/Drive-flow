@@ -37,7 +37,7 @@ export const blogsReadService = async (req) => {
       UnwindWriterStage,
       ProjectionStage,
     ]);
-
+    console.log(blogs);
     if (!blogs) {
       return { status: "Failed", data: "Blogs not Found" };
     }

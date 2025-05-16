@@ -77,7 +77,7 @@ export const carReadService = async (req) => {
       UnwindHosterStage,
       ProjectionStage,
     ]);
-
+    console.log(car);
     if (!car || car.length === 0) {
       return { status: "Failed", data: "Car not Found" };
     }
@@ -566,7 +566,7 @@ export const rejectCarRequestService = async (req) => {
       { _id: carRequestID },
       { createdAt: 0, updatedAt: 0 }
     );
-    
+
     if (!requestedCar) {
       return { status: "Failed", data: "Requested car not found" };
     }

@@ -1,7 +1,7 @@
 // ===== Internal Imports =====
 import TestimonialsModel from "../model/TestimonialsModel.js";
 
-// ===== Brands Read Service =====
+// ===== Testimonials Read Service =====
 export const testimonialsReadService = async (req) => {
   try {
     const testimonials = await TestimonialsModel.find({});
